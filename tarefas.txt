@@ -1,0 +1,11 @@
+backend - Eduarda (SQLITE3)
+calculo - Daniel e Eduarda()
+frontend - Lucas e Vitor (figma/CSS/HTML)
+
+--- Se der tempo ver alguma API para cotação do euro 
+
+
+
+Ferramentas possiveis 
+Figma
+Vscode
