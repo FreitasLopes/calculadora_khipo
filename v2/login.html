@@ -1,71 +1,129 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro - KHipo</title>
+    <meta name="description" content="Trabalho Fecap to Khipo">
+    <title>Bem-vindo</title>
     <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-color: #110808;
+            margin: 0;
+            background-color: #f4f4f4;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
 
-        .container {
-            background-color: #4a2396;
-            padding: 30px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            width: 400px;
-        }
-
-        h2 {
+        div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             text-align: center;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            max-width: 90%; /* Limita a largura do conteúdo */
+            width: 400px; /* Largura máxima */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidade */
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            max-width: 150px; /* Limita a largura da imagem */
             margin-bottom: 20px;
         }
 
+        h1 {
+            color: #552f81;
+            font-size: 32px;
+            margin-bottom: 40px;
+        }
+
         input {
+            margin: 8px 0;
+            padding: 15px 20px;
+            background-color: #9b86b348;
             width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            font-size: 14px;
+            border-radius: 3px;
+            border: 1px solid #9b86b3;
             box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #552f81;
         }
 
         button {
-            background-color: #7d63b9;
-            color: rgb(255, 255, 255);
-            padding: 12px 20px;
-            margin: 20px 0;
+            padding: 15px 40px;
+            font-size: 14px;
+            background-color: #9b86b3ee;
+            color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 30px;
             cursor: pointer;
-            width: 100%;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
         }
 
         button:hover {
-            background-color: #d8b413;
+            background-color: #6c5c80;
+        }
+
+        a {
+            text-decoration: none;
+            display: block;
+            margin-top: 10px;
+        }
+
+        /* Media Query para telas pequenas */
+        @media (max-width: 600px) {
+            div {
+                width: 90%;
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 24px;
+                margin-bottom: 30px;
+            }
+
+            input {
+                font-size: 12px;
+                padding: 12px 18px;
+            }
+
+            button {
+                padding: 12px 30px;
+                font-size: 12px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>LOGIN</h2>
-        <form action="#">
-            <div>
-                <label for="user">Usuário:</label>
-                <input type="user" id="user" name="user" required>
-            </div>
-            <div>
-                <label for="senha">Senha:</label>
-                <input type="senha" id="senha" name="senha" required>
-            
-            <div>
-
-                <div class="container">
-               <button><a href="P inicial.html">Entrar</a></button>  
-            </div>                  
+    <div>
+        <img src="khipo_logo.png" alt="Imagem do Khipo">
+        <h1>Bem-vindo</h1>
+        <input type="text" placeholder="Utilizador">
+        <input type="password" placeholder="Palavra passe">
+        <a href="cadastro.html">
+            <button>Cadastrar</button>
+        </a>
+        <a href="main.html">
+            <button>entrar</button>
+        </a>
+    </div>
+</body>
+</html>

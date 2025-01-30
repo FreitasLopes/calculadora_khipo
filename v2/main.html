@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Página com menu hambúrguer, troca de idioma e botões com imagens">
+    <title>Home</title>
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            margin-top: 60px; /* Espaço para o header fixo */
+            background-color: #f4f4f4;
+        }
+
+        /* Header fixo */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #552f81;
+            color: white;
+            padding: 10px 20px;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+        }
+
+        header h1 {
+            font-size: 24px;
+        }
+
+        /* Menu fixo (desktop) */
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* Menu hambúrguer */
+        .menu-icon {
+            display: none; /* Escondido no desktop */
+            cursor: pointer;
+            width: 30px;
+            height: 20px;
+            position: relative;
+        }
+
+        .menu-icon div {
+            width: 100%;
+            height: 4px;
+            background-color: white;
+            position: absolute;
+            left: 0;
+            transition: transform 0.3s ease, top 0.3s ease, bottom 0.3s ease;
+        }
+
+        .menu-icon div:nth-child(1) {
+            top: 0;
+        }
+
+        .menu-icon div:nth-child(2) {
+            top: 8px;
+        }
+
+        .menu-icon div:nth-child(3) {
+            bottom: 0;
+        }
+
+        /* Menu container */
+        .menu-container {
+            position: fixed;
+            top: 0;
+            right: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: #552f81;
+            color: white;
+            padding: 20px;
+            transition: right 0.3s ease;
+            z-index: 999;
+        }
+
+        .menu-container a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            margin: 10px 0;
+            font-size: 18px;
+        }
+
+        .menu-container a:hover {
+            text-decoration: underline;
+        }
+
+        /* Botões de lugar */
+        .buttons-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 100px; /* Espaço depois do header */
+            padding: 20px;
+        }
+
+        .button {
+            display: block;
+            width: 250px;
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .button span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Imagens de exemplo para os botões */
+        .nacional {
+            background-image: url('https://via.placeholder.com/250x250?text=Nacional');
+        }
+
+        .internacional {
+            background-image: url('https://via.placeholder.com/250x250?text=Internacional');
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .buttons-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .button {
+                width: 80%;
+                margin-bottom: 20px;
+            }
+
+            .menu-container {
+                width: 200px;
+            }
+
+            nav {
+                display: none; /* Esconde os links no menu fixo quando estiver em dispositivos móveis */
+            }
+
+            .menu-icon {
+                display: block; /* Exibe o hambúrguer apenas em dispositivos móveis */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header fixo -->
+    <header>
+        <h1 id="siteTitle">KHIPO</h1>
+        <!-- Menu visível no desktop -->
+        <nav>
+            <a href="#sobre" id="sobreLink">Sobre</a>
+            <a href="#faq" id="faqLink">FAQ</a>
+            <a href="#politicas" id="politicasLink">Políticas</a>
+            <a href="conta.html" id="contaLink">Conta</a>
+        </nav>
+
+        <!-- Menu hambúrguer -->
+        <div class="menu-icon" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+
+        <!-- Seletor de idioma -->
+        <select id="languageSelect" onchange="changeLanguage()">
+            <option value="pt-br">Português (Brasil)</option>
+            <option value="pt-pt">Português (Portugal)</option>
+            <option value="en">English</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="it">Italiano</option>
+            <option value="ru">Русский</option>
+            <option value="ja">日本語</option>
+            <option value="zh">中文</option>
+        </select>
+    </header>
+
+    <!-- Menu Hambúrguer -->
+    <div class="menu-container" id="menuContainer">
+        <a href="#sobre" id="menuSobreLink">Sobre</a>
+        <a href="#faq" id="menuFaqLink">FAQ</a>
+        <a href="#politicas" id="menuPoliticasLink">Políticas</a>
+        <a href="#login" id="menuLoginLink">Login</a>
+    </div>
+
+    <!-- Conteúdo da página -->
+    <section class="buttons-container">
+        <button class="button nacional" onclick="window.location.href='#nacional'">
+            <span id="nacionalButton">Nacional</span>
+        </button>
+        <button class="button internacional" onclick="window.location.href='#internacional'">
+            <span id="internacionalButton">Internacional</span>
+        </button>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p id="footerText">&copy; 2025 Todos os direitos reservados</p>
+    </footer>
+
+    <script>
+        const translations = {
+            "pt-br": {
+                siteTitle: "KHIPO",
+                sobre: "Sobre",
+                faq: "FAQ",
+                politicas: "Políticas",
+                conta: "Conta",
+                nacionalButton: "Nacional",
+                internacionalButton: "Internacional",
+                footerText: "&copy; 2025 Todos os direitos reservados"
+            },
+            "pt-pt": {
+                siteTitle: "KHIPO",
+                sobre: "Sobre",
+                faq: "FAQ",
+                politicas: "Políticas",
+                conta: "Conta",
+                nacionalButton: "Nacional",
+                internacionalButton: "Internacional",
+                footerText: "&copy; 2025 Todos os direitos reservados"
+            },
+            "en": {
+                siteTitle: "KHIPO",
+                sobre: "About",
+                faq: "FAQ",
+                politicas: "Policies",
+                conta: "Account",
+                nacionalButton: "National",
+                internacionalButton: "International",
+                footerText: "&copy; 2025 All rights reserved"
+            },
+            "es": {
+                siteTitle: "KHIPO",
+                sobre: "Sobre",
+                faq: "FAQ",
+                politicas: "Políticas",
+                conta: "Cuenta",
+                nacionalButton: "Nacional",
+                internacionalButton: "Internacional",
+                footerText: "&copy; 2025 Todos los derechos reservados"
+            },
+            "fr": {
+                siteTitle: "KHIPO",
+                sobre: "À propos",
+                faq: "FAQ",
+                politicas: "Politiques",
+                conta: "Compte",
+                nacionalButton: "National",
+                internacionalButton: "International",
+                footerText: "&copy; 2025 Tous les droits réservés"
+            },
+            "de": {
+                siteTitle: "KHIPO",
+                sobre: "Über",
+                faq: "FAQ",
+                politicas: "Richtlinien",
+                conta: "Konto",
+                nacionalButton: "National",
+                internacionalButton: "International",
+                footerText: "&copy; 2025 Alle Rechte vorbehalten"
+            },
+            "it": {
+                siteTitle: "KHIPO",
+                sobre: "Chi siamo",
+                faq: "FAQ",
+                politicas: "Politiche",
+                conta: "Account",
+                nacionalButton: "Nazionale",
+                internacionalButton: "Internazionale",
+                footerText: "&copy; 2025 Tutti i diritti riservati"
+            },
+            "ru": {
+                siteTitle: "KHIPO",
+                sobre: "О нас",
+                faq: "FAQ",
+                politicas: "Политика",
+                conta: "Аккаунт",
+                nacionalButton: "Национальный",
+                internacionalButton: "Международный",
+                footerText: "&copy; 2025 Все права защищены"
+            },
+            "ja": {
+                siteTitle: "KHIPO",
+                sobre: "概要",
+                faq: "FAQ",
+                politicas: "ポリシー",
+                conta: "アカウント",
+                nacionalButton: "国内",
+                internacionalButton: "国際",
+                footerText: "&copy; 2025 すべての権利を保有"
+            },
+            "zh": {
+                siteTitle: "KHIPO",
+                sobre: "关于我们",
+                faq: "FAQ",
+                politicas: "政策",
+                conta: "账户",
+                nacionalButton: "国内",
+                internacionalButton: "国际",
+                footerText: "&copy; 2025 保留所有权利"
+            }
+        };
+
+        function changeLanguage() {
+            const lang = document.getElementById('languageSelect').value;
+            const translation = translations[lang];
+
+            // Atualizar os textos da página
+            document.getElementById('siteTitle').textContent = translation.siteTitle;
+            document.getElementById('sobreLink').textContent = translation.sobre;
+            document.getElementById('faqLink').textContent = translation.faq;
+            document.getElementById('politicasLink').textContent = translation.politicas;
+            document.getElementById('contaLink').textContent = translation.conta;
+            document.getElementById('menuSobreLink').textContent = translation.sobre;
+            document.getElementById('menuFaqLink').textContent = translation.faq;
+            document.getElementById('menuPoliticasLink').textContent = translation.politicas;
+            document.getElementById('menuLoginLink').textContent = translation.conta;
+            document.getElementById('nacionalButton').textContent = translation.nacionalButton;
+            document.getElementById('internacionalButton').textContent = translation.internacionalButton;
+            document.getElementById('footerText').innerHTML = translation.footerText;
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById('menuContainer');
+            const menuIconDivs = document.querySelectorAll('.menu-icon div');
+
+            if (menu.style.right === '-250px') {
+                menu.style.right = '0';
+                menuIconDivs[0].style.transform = 'rotate(45deg)';
+                menuIconDivs[1].style.opacity = '0';
+                menuIconDivs[2].style.transform = 'rotate(-45deg)';
+            } else {
+                menu.style.right = '-250px';
+                menuIconDivs[0].style.transform = 'rotate(0)';
+                menuIconDivs[1].style.opacity = '1';
+                menuIconDivs[2].style.transform = 'rotate(0)';
+            }
+        }
+    </script>
+</body>
+</html>
