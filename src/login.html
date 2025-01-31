@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Trabalho Fecap to Khipo">
+    <title>Bem-vindo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #fff;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            max-width: 90%;
+            width: 400px;
+            box-shadow: none;
+            opacity: 0;
+            animation: fadeInDiv 1s forwards;
+        }
+
+        @keyframes fadeInDiv {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            max-width: 150px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #6c4599;
+            font-size: 32px;
+            margin-bottom: 40px;
+            animation: popOut 1s forwards;
+        }
+
+        @keyframes popOut {
+            0% {
+                transform: scale(1);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        input {
+            margin: 10px 0;
+            padding: 18px 11px;
+            background-color: rgba(0, 0, 0, 0.15);
+            width: 250px;
+            font-size: 10px;
+            text-align: left;
+            border-radius: 3px;
+            border: 1px solid transparent;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+
+        input:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        @keyframes slideFadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #552f81;
+        }
+
+        input::placeholder {
+            color: rgba(0, 0, 0, 0.5);
+            font-size: 10px;
+            text-align: left;
+        }
+
+        button {
+            padding: 18px 40px;
+            font-size: 10px;
+            background-color: #8257b6;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 250px;
+            transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
+            opacity: 0.25; /* Opacidade de 25% quando não selecionado */
+            transform: scale(0.95); /* Tamanho reduzido */
+        }
+
+        #entrar {
+            opacity: 0.3;
+            pointer-events: none;
+            transform: scale(0.95);
+        }
+
+        #entrar.ativo {
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1);
+        }
+
+        button:hover {
+            background-color: #8257b6; /* Cor ao passar o mouse */
+            opacity: 1; /* Opacidade 100% ao passar o mouse */
+            transform: scale(1); /* Aumenta o tamanho */
+        }
+
+        a:nth-of-type(2) button:hover { /* Botão "REGISTRAR" */
+            opacity: 4.00; /* Opacidade aumentada em 5% ao passar o mouse */
+        }
+
+        a {
+            text-decoration: none;
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            div {
+                width: 90%;
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 24px;
+                margin-bottom: 30px;
+            }
+
+            input {
+                font-size: 12px;
+                padding: 10px 18px;
+            }
+
+            button {
+                padding: 16px 30px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <img src="khipo_logo.png" alt="Imagem Khipo">
+        <h1>Bem-vindo</h1>
+        <input type="text" id="usuario" placeholder="Utilizador">
+        <input type="password" id="senha" placeholder="Palavra passe">
+        <a href="main.html">
+            <button id="entrar" disabled>ENTRAR</button>
+        </a>
+        <a href="cadastro.html">
+            <button>REGISTRAR</button>
+        </a>
+    </div>
+
+    <script>
+        // Iniciar animação dos inputs após a animação do texto "Bem-vindo"
+        window.onload = function() {
+            const inputs = document.querySelectorAll('input');
+            setTimeout(function() {
+                inputs.forEach(input => {
+                    input.style.animation = "slideFadeIn 1.5s forwards";
+                });
+            }, 1500); // Atraso de 1.5 segundos para iniciar a animação dos inputs
+        }
+
+        const usuario = document.getElementById('usuario');
+        const senha = document.getElementById('senha');
+        const entrar = document.getElementById('entrar');
+
+        function verificarCampos() {
+            if (usuario.value.trim() !== '' && senha.value.trim() !== '') {
+                entrar.classList.add('ativo');
+                entrar.disabled = false;
+            } else {
+                entrar.classList.remove('ativo');
+                entrar.disabled = true;
+            }
+        }
+
+        usuario.addEventListener('input', verificarCampos);
+        senha.addEventListener('input', verificarCampos);
+    </script>
+</body>
+</html>

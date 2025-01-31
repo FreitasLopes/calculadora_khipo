@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>KHipo Splash Screen</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: #000;
+    }
+
+    .splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #55329A; /* Cor inicial do fundo */
+      transition: background-color 0.4s ease-in-out; /* Transição suave da cor de fundo */
+    }
+
+    .splash-screen img {
+      max-width: 18%; /* Logo menor */
+      max-height: 18%; /* Logo menor */
+      filter: brightness(0) invert(1); /* Torna a imagem branca */
+    }
+  </style>
+</head>
+<body>
+
+  <div class="splash-screen" id="splash">
+    <img src="khipo_logo.png" alt="KHipo Logo">
+  </div>
+
+  <script>
+    setTimeout(function() {
+      // Altera a cor de fundo para branco (fade-in)
+      var splash = document.getElementById('splash');
+      splash.style.backgroundColor = 'white';
+
+      // Redireciona para a página após a cor de fundo ficar totalmente branca
+      setTimeout(function() {
+        window.location.href = "login.html"; // Substitua com a página real
+      }, 700); // Aguarda a transição de fundo terminar (3 segundos)
+    }, 700); // Tempo de exibição da splash screen (3 segundos)
+  </script>
+
+</body>
+</html>

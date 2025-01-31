@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <title>KHIPO - Calculadora Financeira</title>
+    <style>
+      * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #56207A;
+            padding: 20px 30px;
+            color: white;
+            width: 100%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .lang-btn {
+            background-color: #9263C2;
+            border: none;
+            padding: 10px 10px;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .lang-btn:hover {
+            background-color: #7a4a9c;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            margin-top: 20px;
+        }
+
+
+        .input-group {
+            margin: 15px 0;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background: #552f81;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #3e2160;
+        }
+
+        .resumo {
+            margin-top: 20px;
+            padding: 10px;
+            background: #552f81;
+            color: white;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .resumo p {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.5);
+            padding: 5px 0;
+        }
+
+        .btn-pdf {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background: #00a8e8;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn-pdf:hover {
+            background: #007bbd;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">KHIPO</div>
+    <nav>
+        <ul>
+            <li><a href="sobre.html" id="sobreLink">Sobre</a></li>
+            <li><a href="conta.html" id="contaLink">Conta</a></li>
+        </ul>
+    </nav>
+   
+    <!-- Seletor de idioma -->
+    <select id="languageSelect" class="lang-select" onchange="changeLanguage()">
+        <option value="pt-br">Português (Brasil)</option>
+        <option value="pt-pt">Português (Portugal)</option>
+        <option value="en">English</option>
+        <option value="es">Español</option>
+        <option value="fr">Français</option>
+        <option value="de">Deutsch</option>
+        <option value="it">Italiano</option>
+        <option value="ru">Русский</option>
+        <option value="ja">日本語</option>
+        <option value="zh">中文</option>
+    </select>
+</header>
+
+<div class="container">
+    <h2 id="calculadoraTitle">Calculadora</h2>
+    <div class="input-group">
+        <label id="profissionalLabel">Escolha o Profissional:</label>
+        <select id="profissional" onchange="atualizarValorHora()">
+            <option value="senior">Senior</option>
+            <option value="pleno">Pleno</option>
+            <option value="estagiario">Estagiário</option>
+            <option value="junior">Júnior</option>
+            <option value="scrumMaster">Scrum Master</option>
+            <option value="ti">TI</option>
+            <option value="contabilidade">Contabilidade</option>
+            <option value="atendimento">Atendimento ao Cliente</option>
+            <option value="rh">RH</option>
+        </select>
+    </div>
+
+    <div class="input-group">
+        <label id="horasLabel">Horas Trabalhadas no Mês:</label>
+        <input type="number" id="quantidadeHoras">
+    </div>
+    <div class="input-group">
+        <label id="valorHoraLabel">Valor por Hora (R$):</label>
+        <input type="number" id="valorHora">
+    </div>
+
+    <div class="input-group">
+        <label id="salarioLabel">Salário Mensal Base (R$):</label>
+        <input type="number" id="salarioMensal">
+    </div>
+
+    <div class="input-group">
+        <label id="mesesLabel">Quantidade de Meses:</label>
+        <input type="number" id="Meses">
+    </div>
+
+    <button onclick="calcular()" id="calcularButton">Calcular</button>
+    <button id="generatePdfButton" class="btn-pdf" style="display: none;" onclick="gerarRelatorioPDF()" id="pdfButton">Gerar Relatório PDF</button>
+
+    <div id="resumo" class="resumo" style="display: none;"></div>
+</div>
+
+<script>
+    const valoresHora = {
+        senior: 100,
+        pleno: 70,
+        estagiario: 30,
+        junior: 50,
+        scrumMaster: 120,
+        ti: 80,
+        contabilidade: 60,
+        atendimento: 40,
+        rh: 50
+    };
+
+    // Função para atualizar o valor da hora com base no profissional selecionado
+    function atualizarValorHora() {
+        const profissionalSelecionado = document.getElementById("profissional").value;
+        const valorHoraInput = document.getElementById("valorHora");
+        valorHoraInput.value = valoresHora[profissionalSelecionado];
+    }
+
+    // Chamada inicial para preencher o valor da hora ao carregar a página
+    atualizarValorHora();
+
+    const translations = {
+        'pt-br': {
+            sobreLink: 'Sobre',
+            contaLink: 'Conta',
+            calculadoraTitle: 'Calculadora',
+            profissionalLabel: 'Escolha o Profissional:',
+            horasLabel: 'Horas Trabalhadas no Mês:',
+            valorHoraLabel: 'Valor por Hora (R$):',
+            salarioLabel: 'Salário Mensal Base (R$):',
+            mesesLabel: 'Quantidade de Meses:',
+            calcularButton: 'Calcular',
+            pdfButton: 'Gerar Relatório PDF'
+        },
+        'en': {
+            sobreLink: 'About',
+            contaLink: 'Account',
+            calculadoraTitle: 'Calculator',
+            profissionalLabel: 'Choose Professional:',
+            horasLabel: 'Hours Worked per Month:',
+            valorHoraLabel: 'Value per Hour ($):',
+            salarioLabel: 'Base Monthly Salary ($):',
+            mesesLabel: 'Number of Months:',
+            calcularButton: 'Calculate',
+            pdfButton: 'Generate PDF Report'
+        },
+        'es': {
+            sobreLink: 'Sobre',
+            contaLink: 'Cuenta',
+            calculadoraTitle: 'Calculadora',
+            profissionalLabel: 'Elija el Profesional:',
+            horasLabel: 'Horas Trabajadas por Mes:',
+            valorHoraLabel: 'Valor por Hora ($):',
+            salarioLabel: 'Salario Base Mensual ($):',
+            mesesLabel: 'Cantidad de Meses:',
+            calcularButton: 'Calcular',
+            pdfButton: 'Generar Informe PDF'
+        }
+        // Adicione mais traduções conforme necessário
+    };
+
+    function changeLanguage() {
+        const lang = document.getElementById('languageSelect').value;
+        const translation = translations[lang];
+
+        document.getElementById('sobreLink').textContent = translation.sobreLink;
+        document.getElementById('contaLink').textContent = translation.contaLink;
+        document.getElementById('calculadoraTitle').textContent = translation.calculadoraTitle;
+        document.getElementById('profissionalLabel').textContent = translation.profissionalLabel;
+        document.getElementById('horasLabel').textContent = translation.horasLabel;
+        document.getElementById('valorHoraLabel').textContent = translation.valorHoraLabel;
+        document.getElementById('salarioLabel').textContent = translation.salarioLabel;
+        document.getElementById('mesesLabel').textContent = translation.mesesLabel;
+        document.getElementById('calcularButton').textContent = translation.calcularButton;
+        document.getElementById('pdfButton').textContent = translation.pdfButton;
+    }
+
+    function calcular() {
+        const profissionalSelecionado = document.getElementById("profissional").value;
+        const quantidadeHoras = parseFloat(document.getElementById("quantidadeHoras").value);
+        const valorHora = parseFloat(document.getElementById("valorHora").value) || valoresHora[profissionalSelecionado];
+        const salarioMensal = parseFloat(document.getElementById("salarioMensal").value);
+        const meses = parseFloat(document.getElementById("Meses").value);
+
+        const faturacaoMensal = quantidadeHoras * valorHora;
+        const custoReal = salarioMensal;
+        const mlkPercentual = 0.10;
+        const custoMLK = custoReal + (custoReal * mlkPercentual);
+        const impostoBrasil = 0.20;
+        const valorImposto = faturacaoMensal * impostoBrasil;
+        const valorMargemLiquida = faturacaoMensal - valorImposto;
+        const comissaoPercentual = 0.01;
+        const comissao = valorMargemLiquida * comissaoPercentual;
+        const administrativoPercentual = 0.15;
+        const custoAdministrativo = faturacaoMensal * administrativoPercentual;
+        const custoOperacional = custoReal + custoAdministrativo + comissao;
+        const mop = valorMargemLiquida - custoOperacional;
+        const mopPercentual = (mop / valorMargemLiquida) * 100;
+        const mlk = valorMargemLiquida - comissao - custoAdministrativo - custoMLK;
+        const mlkFinalPercentual = (mlk / valorMargemLiquida) * 100;
+
+        const resumoDiv = document.getElementById("resumo");
+        resumoDiv.style.display = "block";
+        resumoDiv.innerHTML =  
+            `<h3>Resumo</h3>
+            <p>Faturação Mensal <span>R$ ${faturacaoMensal.toFixed(2)}</span></p>
+            <p>Custo Real <span>R$ ${custoReal.toFixed(2)}</span></p>
+            <p>Custo MLK <span>R$ ${custoMLK.toFixed(2)}</span></p>
+            <p>Margem Líquida <span>R$ ${valorMargemLiquida.toFixed(2)}</span></p>
+            <p>Comissão <span>R$ ${comissao.toFixed(2)}</span></p>
+            <p>Custo Administrativo <span>R$ ${custoAdministrativo.toFixed(2)}</span></p>
+            <p>Custo Operacional <span>R$ ${custoOperacional.toFixed(2)}</span></p>
+            <p>MOP <span>R$ ${mop.toFixed(2)} (${mopPercentual.toFixed(1)}%)</span></p>
+            <p>MLK Final <span>R$ ${mlk.toFixed(2)} (${mlkFinalPercentual.toFixed(1)}%)</span></p>`;
+        document.getElementById("generatePdfButton").style.display = "block";
+    }
+
+    function gerarRelatorioPDF() {
+        const profissionalSelecionado = document.getElementById("profissional").value;
+        const quantidadeHoras = parseFloat(document.getElementById("quantidadeHoras").value);
+        const valorHora = parseFloat(document.getElementById("valorHora").value) || valoresHora[profissionalSelecionado];
+        const salarioMensal = parseFloat(document.getElementById("salarioMensal").value);
+        const meses = parseFloat(document.getElementById("Meses").value);
+
+        const faturacaoMensal = quantidadeHoras * valorHora;
+        const custoReal = salarioMensal;
+        const mlkPercentual = 0.10;
+        const custoMLK = custoReal + (custoReal * mlkPercentual);
+        const impostoBrasil = 0.20;
+        const valorImposto = faturacaoMensal * impostoBrasil;
+        const valorMargemLiquida = faturacaoMensal - valorImposto;
+        const comissaoPercentual = 0.01;
+        const comissao = valorMargemLiquida * comissaoPercentual;
+        const administrativoPercentual = 0.15;
+        const custoAdministrativo = faturacaoMensal * administrativoPercentual;
+        const custoOperacional = custoReal + custoAdministrativo + comissao;
+        const mop = valorMargemLiquida - custoOperacional;
+        const mopPercentual = (mop / valorMargemLiquida) * 100;
+        const mlk = valorMargemLiquida - comissao - custoAdministrativo - custoMLK;
+        const mlkFinalPercentual = (mlk / valorMargemLiquida) * 100;
+
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.setFontSize(16);
+        doc.text('Relatório de Cálculos Financeiros', 20, 20);
+        doc.setFontSize(12);
+        doc.text(`Profissional: ${profissionalSelecionado}`, 20, 30);
+        doc.text(`Faturação Mensal: R$ ${faturacaoMensal.toFixed(2)}`, 20, 40);
+        doc.text(`Custo Real: R$ ${custoReal.toFixed(2)}`, 20, 50);
+        doc.text(`Custo MLK: R$ ${custoMLK.toFixed(2)}`, 20, 60);
+        doc.text(`Margem Líquida: R$ ${valorMargemLiquida.toFixed(2)}`, 20, 70);
+        doc.text(`Comissão: R$ ${comissao.toFixed(2)}`, 20, 80);
+        doc.text(`Custo Administrativo: R$ ${custoAdministrativo.toFixed(2)}`, 20, 90);
+        doc.text(`Custo Operacional: R$ ${custoOperacional.toFixed(2)}`, 20, 100);
+        doc.text(`MOP: R$ ${mop.toFixed(2)} (${mopPercentual.toFixed(1)}%)`, 20, 110);
+        doc.text(`MLK Final: R$ ${mlk.toFixed(2)} (${mlkFinalPercentual.toFixed(1)}%)`, 20, 120);
+
+        doc.save('relatorio_calculos_financeiros.pdf');
+    }
+</script>
+
+</body>
+</html>

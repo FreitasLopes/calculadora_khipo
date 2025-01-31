@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KHIPO - Calculadora Financeira</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #56207A;
+            padding: 15px 30px;
+            color: white;
+            width: 100%;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .lang-btn {
+            background-color: #9263C2;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .lang-btn:hover {
+            background-color: #7a4a9c;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 400px;
+            margin-top: 20px;
+        }
+
+        .header {
+            background: #552f81;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px 10px 0 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .input-group {
+            margin: 15px 0;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background: #552f81;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #3e2160;
+        }
+
+        .resumo {
+            margin-top: 20px;
+            padding: 10px;
+            background: #552f81;
+            color: white;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .resumo p {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.5);
+            padding: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">KHIPO</div>
+    <nav>
+        <ul>
+            <li><a href="sobre.html">Sobre</a></li>
+            <li><a href="conta.html">Conta</a></li>
+        </ul>
+    </nav>
+    <button class="lang-btn">Português (Brasil)</button>
+</header>
+
+<div class="container">
+    <h2>Calculadora</h2>
+    <div class="input-group">
+        <label>Horas Trabalhadas no Mês:</label>
+        <input type="number" id="quantidadeHoras">
+    </div>
+    <div class="input-group">
+        <label>Valor por Hora (R$):</label>
+        <input type="number" id="valorHora">
+    </div>
+    <div class="input-group">
+        <label>Salário Mensal Base (R$):</label>
+        <input type="number" id="salarioMensal">
+    </div>
+    <div class="input-group">
+        <label>Quantidade de Meses:</label>
+        <input type="number" id="Meses">
+    </div>
+    <button onclick="calcular()">Calcular</button>
+    <div id="resumo" class="resumo" style="display: none;"></div>
+</div>
+
+<script>
+    function calcular() {
+        const quantidadeHoras = parseFloat(document.getElementById("quantidadeHoras").value);
+        const valorHora = parseFloat(document.getElementById("valorHora").value);
+        const salarioMensal = parseFloat(document.getElementById("salarioMensal").value);
+        const meses = parseFloat(document.getElementById("Meses").value);
+
+        const faturacaoMensal = quantidadeHoras * valorHora;
+        const custoReal = (salarioMensal * 12) / meses;
+        const mlkPercentual = 0.10;
+        const custoMLK = custoReal + (custoReal * mlkPercentual);
+        const impostoBrasil = 0.20;
+        const valorImposto = faturacaoMensal * impostoBrasil;
+        const valorMargemLiquida = faturacaoMensal - valorImposto;
+        const comissaoPercentual = 0.01;
+        const comissao = valorMargemLiquida * comissaoPercentual;
+        const administrativoPercentual = 0.15;
+        const custoAdministrativo = faturacaoMensal * administrativoPercentual;
+        const custoOperacional = custoReal + custoAdministrativo + comissao;
+        const mop = valorMargemLiquida - custoOperacional;
+        const mopPercentual = (mop / valorMargemLiquida) * 100;
+        const mlk = valorMargemLiquida - comissao - custoAdministrativo - custoMLK;
+        const mlkFinalPercentual = (mlk / valorMargemLiquida) * 100;
+
+        const resumoDiv = document.getElementById("resumo");
+        resumoDiv.style.display = "block";
+        resumoDiv.innerHTML = `
+            <h3>Resumo</h3>
+            <p>Faturação Mensal <span>R$ ${faturacaoMensal.toFixed(2)}</span></p>
+            <p>Custo Real <span>R$ ${custoReal.toFixed(2)}</span></p>
+            <p>Custo MLK <span>R$ ${custoMLK.toFixed(2)}</span></p>
+            <p>Margem Líquida <span>R$ ${valorMargemLiquida.toFixed(2)}</span></p>
+            <p>Comissão <span>R$ ${comissao.toFixed(2)}</span></p>
+            <p>Custo Administrativo <span>R$ ${custoAdministrativo.toFixed(2)}</span></p>
+            <p>Custo Operacional <span>R$ ${custoOperacional.toFixed(2)}</span></p>
+            <p>MOP <span>R$ ${mop.toFixed(2)} (${mopPercentual.toFixed(1)}%)</span></p>
+            <p>MLK <span>R$ ${mlk.toFixed(2)} (${mlkFinalPercentual.toFixed(1)}%)</span></p>
+        `;
+    }
+</script>
+
+</body>
+</html>

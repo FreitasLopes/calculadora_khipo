@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Página com menu hambúrguer, troca de idioma e botões com imagens">
+    <title>Home</title>
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center; /* Alinha horizontalmente */
+            align-items: center; /* Alinha verticalmente */
+            height: 200%; /* Aumenta a altura da tela para garantir rolagem */
+            padding-top: 0; /* Remove o padding do topo */
+            overflow-y: auto; /* Permite rolar a página */
+            flex-direction: column;
+            padding-bottom: 50px; /* Garante que o footer não se sobreponha ao conteúdo */
+        }
+
+        /* Header fixo */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #552f81;
+            color: white;
+            padding: 10px 20px;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+        }
+
+        #siteTitle {
+            font-size: 24px;
+            font-weight: bold;  /* Torna o texto em negrito */
+            color: white;  /* Muda a cor do texto para branco */
+            text-decoration: none;  /* Remove o sublinhado do link */
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* Seletor de idioma */
+        #languageSelect {
+            background-color: #8257b6;
+            color: white;
+            font-size: 16px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: 1px solid #552f81;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            appearance: none;
+        }
+
+        #languageSelect:hover {
+            background-color: #6a3fa3;
+            transform: scale(1.05);
+        }
+
+        #languageSelect:focus {
+            outline: none;
+            box-shadow: 0 0 5px 2px rgba(133, 87, 182, 0.7);
+        }
+
+        /* Caixa de conteúdo com o texto */
+        .content-box {
+            width: 80%;
+            max-width: 1000px; /* Aumenta o tamanho máximo da caixa */
+            padding: 30px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.8s ease-out; /* Animação de slide-in */
+            text-align: center; /* Centraliza o conteúdo dentro da caixa */
+            margin-top: 80px; /* Garante que a caixa não fique em cima do header */
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out forwards, slideIn 0.8s ease-out forwards;
+        }
+
+        /* Animação de desvanecimento (fade-in) */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Animação de deslizamento (slide-in) */
+        @keyframes slideIn {
+            from {
+                transform: translateY(30px);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        /* Estilo do texto */
+        .content-box p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* Footer fixo sem animação */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        /* Estilo de scroll para o corpo */
+        body {
+            overflow-y: scroll; /* Permite rolar mais */
+            min-height: 100vh; /* Garante que o conteúdo ocupe toda a altura da tela */
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header fixo -->
+    <header>
+        <a href="main.html" id="siteTitle">KHIPO</a>
+        <nav>
+            <a href="#politicas" id="politicasLink">Políticas</a>
+            <a href="conta.html" id="contaLink">Conta</a>
+        </nav>
+        <!-- Seletor de idioma -->
+        <select id="languageSelect" onchange="changeLanguage()">
+            <option value="pt-br">Português (Brasil)</option>
+            <option value="pt-pt">Português (Portugal)</option>
+            <option value="en">English</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="it">Italiano</option>
+            <option value="ru">Русский</option>
+            <option value="ja">日本語</option>
+            <option value="zh">中文</option>
+        </select>
+    </header>
+
+    <!-- Caixa de conteúdo com o texto -->
+    <div class="content-box">
+        <p>A Khipo nasceu com o propósito de transformar ideias em soluções tecnológicas que impactam positivamente a vida das pessoas. Desde sua origem, a empresa se dedicou a desenvolver projetos inovadores e fornecer soluções integradas para atender às demandas de um mercado em constante evolução.</p>
+        <p>Iniciando suas atividades em um ambiente universitário, a Khipo rapidamente se destacou ao oferecer soluções para grandes multinacionais, acumulando experiência e consolidando sua presença no mercado. Essa trajetória foi guiada por uma determinação inabalável e um compromisso com a excelência.</p>
+        <p>Em 2012, a visão de criar soluções inovadoras no setor de mobilidade levou à fundação de uma startup que rapidamente ganhou tração no mercado. A jornada empreendedora não foi isenta de desafios; o caminho estava repleto de altos e baixos. No entanto, com uma abordagem centrada no cliente e um compromisso inabalável com a qualidade, a startup alcançou a marca de mais de 500 mil usuários ativos.</p>
+        <p>Paralelamente, novos e desafiadores projetos de consultoria começaram a surgir, refletindo a crescente demanda por soluções tecnológicas personalizadas. Esse período coincidiu com o início de uma fase acadêmica em 2013, levando os fundadores a explorar novas oportunidades.</p>
+        <p>Reconhecendo o potencial para ampliar seu impacto, a decisão estratégica de fundar a Khipo foi tomada. Com essa nova empreitada, a Khipo se dedicou a integrar o conhecimento adquirido e a experiência prática para oferecer soluções inovadoras e eficazes, consolidando sua presença no mercado e reforçando seu compromisso com a transformação digital.</p>
+        <p>A Khipo se consolidou como uma empresa dedicada à solução de problemas complexos através da tecnologia e da inovação, oferecendo serviços de consultoria altamente especializados. Um dos nossos principais diferenciais é a composição da nossa equipe: 70% dos membros são formados por alunos e ex-alunos dos fundadores, garantindo uma continuidade de conhecimento e cultura organizacional que nos distingue no mercado.</p>
+        <p>Contamos com especialistas de excelência, formados em instituições renomadas como ESPM, FGV e INSPER. Essa formação de alto nível assegura que nossa equipe esteja sempre na vanguarda das tendências tecnológicas e práticas de mercado, permitindo-nos oferecer soluções inovadoras e eficazes aos nossos clientes.</p>
+        <p>Com cinco anos de experiência, a Khipo se destaca como especialista em consultoria e integração de soluções, atendendo empresas de todos os setores e tamanhos. Nosso compromisso é oferecer não apenas código de qualidade, mas soluções que realmente agregam valor e impulsionam o sucesso dos nossos clientes.</p>
+        <p>Nossa equipe é composta por desenvolvedores altamente qualificados, dedicados a entregar excelência em cada projeto. As soluções abrangentes da Khipo cobrem todas as etapas do ciclo de vida do projeto, desde a concepção até a implementação de decisões estratégicas, assegurando qualidade de ponta a ponta.</p>
+        <p>Ao longo de nossa trajetória, já transformamos mais de 80 empresas e realizamos mais de 350 projetos em três continentes: América do Sul, América do Norte, Europa e África. Este alcance global reflete nosso compromisso com a inovação e a excelência.</p>
+        <p>Convidamos você a se tornar parte dessa história de sucesso e inovação contínua.</p>
+    </div>
+
+    <!-- Footer fixo sem animação -->
+    <footer>
+        <p id="footerText">&copy;2025 Todos os direitos reservados</p>
+    </footer>
+
+    <script>
+        const translations = {
+            "pt-br": {
+                "sobreLink": "Sobre",
+                "politicasLink": "Políticas",
+                "contaLink": "Conta",
+                "footerText": "&copy; 2025 Todos os direitos reservados"
+            },
+            "en": {
+                "sobreLink": "About",
+                "politicasLink": "Policies",
+                "contaLink": "Account",
+                "footerText": "&copy; 2025 All rights reserved"
+            },
+            "es": {
+                "sobreLink": "Sobre",
+                "politicasLink": "Políticas",
+                "contaLink": "Cuenta",
+                "footerText": "&copy; 2025 Todos los derechos reservados"
+            },
+            "fr": {
+                "sobreLink": "À propos",
+                "politicasLink": "Politiques",
+                "contaLink": "Compte",
+                "footerText": "&copy; 2025 Tous droits réservés"
+            },
+            "de": {
+                "sobreLink": "Über uns",
+                "politicasLink": "Richtlinien",
+                "contaLink": "Konto",
+                "footerText": "&copy; 2025 Alle Rechte vorbehalten"
+            }
+        };
+
+        function changeLanguage() {
+            const language = document.getElementById('languageSelect').value;
+            const translation = translations[language];
+
+            document.getElementById("sobreLink").textContent = translation.sobreLink;
+            document.getElementById("politicasLink").textContent = translation.politicasLink;
+            document.getElementById("contaLink").textContent = translation.contaLink;
+            document.getElementById("footerText").innerHTML = translation.footerText;
+        }
+    </script>
+
+</body>
+</html>

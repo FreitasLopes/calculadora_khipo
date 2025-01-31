@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Página de conta com seleção de idioma">
+    <title>Informações do Cliente</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding-top: 80px;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #552f81;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        #siteTitle {
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+            opacity: 1;
+            animation: slideIn 1s forwards;
+            animation-delay: 0.3s;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .language-selector select {
+            background-color: #8257b6;
+            color: white;
+            font-size: 14px;
+            padding: 8px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .content {
+            background-color: white;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 22px;
+            color: #333;
+        }
+
+        .profile-pic img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ddd;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .user-details p {
+            font-size: 16px;
+            color: black;
+            margin: 10px 0;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .language-selector {
+                margin-top: 10px;
+            }
+
+            .content {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="main.html" id="siteTitle">KHIPO</a>
+        <nav>
+            <a href="sobre.html" id="sobre">Sobre</a>
+            <a href="profissionais.html">calculo profissões</a>
+            <a href="conta.html" id="contaLink">Conta</a>
+        </nav>
+        <div class="language-selector">
+            <select id="language" onchange="changeLanguage()">
+                <option value="pt-br">Português (Brasil)</option>
+                <option value="en">English</option>
+                <option value="pt-pt">Português (Portugal)</option>
+                <option value="es">Español</option>
+                <option value="fr">Français</option>
+                <option value="de">Deutsch</option>
+                <option value="it">Italiano</option>
+                <option value="ru">Русский</option>
+                <option value="ja">日本語</option>
+                <option value="zh">中文</option>
+            </select>
+        </div>
+        
+    <script>
+        const translations = {
+                "pt-br": {
+                    "accountTitle": "Informações do Cliente",
+                    "userNameTitle": "Nome:",
+                    "userEmailTitle": "Email:",
+                    "userName": "João Silva",
+                    "userEmail": "joao@email.com",
+                    "footerText": "&copy; 2025 Todos os direitos reservados"
+                },
+                "pt-pt": {
+                    "accountTitle": "Informações do Cliente",
+                    "userNameTitle": "Nome:",
+                    "userEmailTitle": "Email:",
+                    "userName": "João Silva",
+                    "userEmail": "joao@email.com",
+                    "footerText": "&copy; 2025 Todos os direitos reservados"
+                },
+                "en": {
+                    "accountTitle": "Account Information",
+                    "userNameTitle": "Name:",
+                    "userEmailTitle": "Email:",
+                    "userName": "John Silva",
+                    "userEmail": "john@email.com",
+                    "footerText": "&copy; 2025 All rights reserved"
+                },
+                "es": {
+                    "accountTitle": "Información del Cliente",
+                    "userNameTitle": "Nombre:",
+                    "userEmailTitle": "Correo electrónico:",
+                    "userName": "Juan Silva",
+                    "userEmail": "juan@email.com",
+                    "footerText": "&copy; 2025 Todos los derechos reservados"
+                },
+                "fr": {
+                    "accountTitle": "Informations du Client",
+                    "userNameTitle": "Nom:",
+                    "userEmailTitle": "E-mail:",
+                    "userName": "Jean Silva",
+                    "userEmail": "jean@email.com",
+                    "footerText": "&copy; 2025 Tous droits réservés"
+                },
+                "de": {
+                    "accountTitle": "Kundeninformationen",
+                    "userNameTitle": "Name:",
+                    "userEmailTitle": "E-Mail:",
+                    "userName": "Johann Silva",
+                    "userEmail": "johann@email.com",
+                    "footerText": "&copy; 2025 Alle Rechte vorbehalten"
+                },
+                "it": {
+                    "accountTitle": "Informazioni Cliente",
+                    "userNameTitle": "Nome:",
+                    "userEmailTitle": "Email:",
+                    "userName": "Giovanni Silva",
+                    "userEmail": "giovanni@email.com",
+                    "footerText": "&copy; 2025 Tutti i diritti riservati"
+                },
+                "ru": {
+                    "accountTitle": "Информация о клиенте",
+                    "userNameTitle": "Имя:",
+                    "userEmailTitle": "Эл. почта:",
+                    "userName": "Иван Сильва",
+                    "userEmail": "ivan@email.com",
+                    "footerText": "&copy; 2025 Все права защищены"
+                },
+                "ja": {
+                    "accountTitle": "顧客情報",
+                    "userNameTitle": "名前:",
+                    "userEmailTitle": "メール:",
+                    "userName": "ジョン・シルバ",
+                    "userEmail": "john@email.com",
+                    "footerText": "&copy; 2025 全著作権所有"
+                },
+                "zh": {
+                    "accountTitle": "客户信息",
+                    "userNameTitle": "姓名:",
+                    "userEmailTitle": "电子邮件:",
+                    "userName": "约翰·席尔瓦",
+                    "userEmail": "john@email.com",
+                    "footerText": "&copy; 2025 保留所有权利"
+                },
+                "pt" : {
+            "accountTitle": "Informações do Cliente",
+            "userNameTitle": "Nome:",
+            "userEmailTitle": "Email:",
+            "userName": "João Silva",
+            "userEmail": "joao@email.com",
+            "footerText": "&copy; 2025 Todos os direitos reservados"
+        }
+            };
+        
+            function changeLanguage() {
+                const selectedLang = document.getElementById('language').value;
+                const translation = translations[selectedLang];
+        
+                if (translation) {
+                    document.getElementById('accountTitle').textContent = translation.accountTitle;
+                    document.getElementById('userNameTitle').textContent = translation.userNameTitle;
+                    document.getElementById('userEmailTitle').textContent = translation.userEmailTitle;
+                    document.getElementById('userName').textContent = translation.userName;
+                    document.getElementById('userEmail').textContent = translation.userEmail;
+                    document.querySelector('footer p').innerHTML = translation.footerText;
+                }
+            }
+        </script>
+        
+    </header>
+
+    <div class="content">
+        <h2 id="accountTitle">Informações do Cliente</h2>
+        <div class="profile-pic">
+            <img id="profileImage" src="avatar.png" alt="Foto de Perfil">
+        </div>
+        <div class="user-details">
+            <p><strong id="userNameTitle">Nome:</strong> <span id="userName">João Silva</span></p>
+            <p><strong id="userEmailTitle">Email:</strong> <span id="userEmail">joao@email.com</span></p>
+        </div>
+    </div>
+
+    <footer>
+        <p id="footerText">&copy; 2025 Todos os direitos reservados</p>
+    </footer>
+</body>
+</html>

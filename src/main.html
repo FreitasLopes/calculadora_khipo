@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Página com menu hambúrguer, troca de idioma e botões com imagens">
+    <title>Home</title>
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            margin-top: 60px; /* Espaço para o header fixo */
+            background-color: #f4f4f4;
+        }
+
+        /* Header fixo */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #552f81;
+            color: white;
+            padding: 10px 20px;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+        }
+
+        header h1 {
+            font-size: 24px;
+            opacity: 0;
+            animation: slideIn 1s forwards;
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+            opacity: 0;
+            animation: slideIn 1s forwards;
+            animation-delay: 0.3s;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .menu-icon {
+            display: none;
+            cursor: pointer;
+            width: 30px;
+            height: 20px;
+            position: relative;
+        }
+
+        .menu-icon div {
+            width: 100%;
+            height: 4px;
+            background-color: white;
+            position: absolute;
+            left: 0;
+            transition: transform 0.3s ease, top 0.3s ease, bottom 0.3s ease;
+        }
+
+        .menu-icon div:nth-child(1) {
+            top: 0;
+        }
+
+        .menu-icon div:nth-child(2) {
+            top: 8px;
+        }
+
+        .menu-icon div:nth-child(3) {
+            bottom: 0;
+        }
+
+        /* Menu container */
+        .menu-container {
+            position: fixed;
+            top: 0;
+            right: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: #552f81;
+            color: white;
+            padding: 20px;
+            transition: right 0.3s ease;
+            z-index: 999;
+        }
+
+        .menu-container a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            margin: 10px 0;
+            font-size: 18px;
+        }
+
+        .menu-container a:hover {
+            text-decoration: underline;
+        }
+
+        /* Botões com imagens */
+        .buttons-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 100px;
+            padding: 20px;
+            flex-wrap: wrap;
+        }
+
+        .button {
+            display: block;
+            width: 48%;
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            animation: popOut 1s forwards, fadeIn 1s forwards;
+            font-family: 'Playfair Display', serif;
+            font-weight: bold;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Adicionado para suavizar o efeito de transformação */
+        }
+
+        /* Animação de pop-out */
+        @keyframes popOut {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Animação de fade-in */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .button:hover {
+            transform: scale(1.1); /* Aumenta o tamanho do botão */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Efeito de sombra ao passar o mouse */
+        }
+
+        .button span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 24px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .button.nacional {
+            background-image: url('nacional.png');
+        }
+
+        .button.internacional {
+            background-image: url('internacional.png');
+        }
+
+        /* Barra de texto passando */
+        .marquee-container {
+            background-color: #333;
+            color: white;
+            font-size: 18px;
+            padding: 10px 0;
+            margin-top: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .marquee {
+            white-space: nowrap;
+            animation: marquee 10s linear infinite;
+            font-family: 'Polly Rounded', sans-serif;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .buttons-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .button {
+                width: 80%;
+                margin-bottom: 20px;
+                height: 250px;
+            }
+
+            .menu-container {
+                width: 200px;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .menu-icon {
+                display: block;
+            }
+        }
+
+        /* Estilos para o seletor de idioma */
+        #languageSelect {
+            background-color: #8257b6;
+            color: white;
+            font-size: 16px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: 1px solid #552f81;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            appearance: none;
+        }
+
+        #languageSelect:hover {
+            background-color: #6a3fa3;
+            transform: scale(1.05);
+        }
+
+        #languageSelect:focus {
+            outline: none;
+            box-shadow: 0 0 5px 2px rgba(133, 87, 182, 0.7);
+        }
+        #siteTitle {
+            font-size: 24px;
+            font-weight: bold;  /* Torna o texto em negrito */
+            color: white;  /* Muda a cor do texto para branco */
+            text-decoration: none;  /* Remove o sublinhado do link */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header fixo -->
+    <header>
+        <a href="main.html">
+            <h1 id="siteTitle">KHIPO</h1>
+        </a>
+        <nav>
+            <a href="sobre.html" id="sobre">Sobre</a>
+            <a href="profissionais.html">calculo profissões</a>
+            <a href="conta.html" id="contaLink">Conta</a>
+        </nav>
+        <!-- Menu hambúrguer -->
+        <div class="menu-icon" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <!-- Seletor de idioma -->
+        <select id="languageSelect" onchange="changeLanguage()">
+            <option value="pt-br">Português (Brasil)</option>
+            <option value="pt-pt">Português (Portugal)</option>
+            <option value="en">English</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="it">Italiano</option>
+            <option value="ru">Русский</option>
+            <option value="ja">日本語</option>
+            <option value="zh">中文</option>
+        </select>
+    </header>
+
+    <!-- Menu Hambúrguer -->
+    <div class="menu-container" id="menuContainer">
+        <a href="sobre.html" id="sobreLink">Sobre</a>
+        <a href="login.html" id="menuLoginLink">Login</a>
+    </div>
+
+    <!-- Conteúdo da página -->
+    <section class="buttons-container">
+        <button class="button nacional">
+            <a href="calculadoranacional.html">
+                <span id="nacionalButton">Nacional</span>
+            </a>
+            </button>
+        <button class="button internacional">
+            <a href="calculadorainternacional.html">
+                <span id="internacionalButton">Internacional</span>
+            </a>
+            
+        </button>
+    </section>
+
+    <!-- Barra de texto passando -->
+    <div class="marquee-container">
+        <div class="marquee" id="marqueeText">
+            KHIPO, empresa de levantamento de requisitos, análise e design especializada na criação de software
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p id="footerText">&copy;2025 Todos os direitos reservados</p>
+    </footer>
+
+    <script>
+        const translations = {
+            "pt-br": {
+                "sobreLink": "Sobre",
+                "politicasLink": "Políticas",
+                "contaLink": "Conta",
+                "nacionalButton": "Nacional",
+                "internacionalButton": "Internacional",
+                "marqueeText": "KHIPO, empresa de levantamento de requisitos, análise e design especializada na criação de software",
+                "footerText": "&copy; 2025 Todos os direitos reservados"
+            },
+            "pt-pt": {
+                "sobreLink": "Sobre",
+                "politicasLink": "Políticas",
+                "contaLink": "Conta",
+                "nacionalButton": "Nacional",
+                "internacionalButton": "Internacional",
+                "marqueeText": "KHIPO, empresa de levantamento de requisitos, análise e design especializada na criação de software",
+                "footerText": "&copy; 2025 Todos os direitos reservados"
+            },
+            "en": {
+                "sobreLink": "About",
+                "politicasLink": "Policies",
+                "contaLink": "Account",
+                "nacionalButton": "National",
+                "internacionalButton": "International",
+                "marqueeText": "KHIPO, a requirements gathering, analysis, and design company specializing in software development",
+                "footerText": "&copy; 2025 All rights reserved"
+            },
+            "es": {
+                "sobreLink": "Sobre",
+                "politicasLink": "Políticas",
+                "contaLink": "Cuenta",
+                "nacionalButton": "Nacional",
+                "internacionalButton": "Internacional",
+                "marqueeText": "KHIPO, empresa de recopilación de requisitos, análisis y diseño especializada en la creación de software",
+                "footerText": "&copy; 2025 Todos los derechos reservados"
+            },
+            "fr": {
+                "sobreLink": "À propos",
+                "politicasLink": "Politiques",
+                "contaLink": "Compte",
+                "nacionalButton": "National",
+                "internacionalButton": "International",
+                "marqueeText": "KHIPO, entreprise spécialisée dans la collecte des exigences, l'analyse et la conception de logiciels",
+                "footerText": "&copy; 2025 Tous droits réservés"
+            },
+            "de": {
+                "sobreLink": "Über uns",
+                "politicasLink": "Richtlinien",
+                "contaLink": "Konto",
+                "nacionalButton": "National",
+                "internacionalButton": "International",
+                "marqueeText": "KHIPO, ein Unternehmen, das sich auf die Sammlung von Anforderungen, Analyse und Design von Software spezialisiert hat",
+                "footerText": "&copy; 2025 Alle Rechte vorbehalten"
+            },
+            "it": {
+                "sobreLink": "Chi siamo",
+                "politicasLink": "Politiche",
+                "contaLink": "Account",
+                "nacionalButton": "Nazionale",
+                "internacionalButton": "Internazionale",
+                "marqueeText": "KHIPO, azienda specializzata nella raccolta dei requisiti, analisi e progettazione di software",
+                "footerText": "&copy; 2025 Tutti i diritti riservati"
+            },
+            "ru": {
+                "sobreLink": "О компании",
+                "politicasLink": "Политика",
+                "contaLink": "Аккаунт",
+                "nacionalButton": "Национальный",
+                "internacionalButton": "Международный",
+                "marqueeText": "KHIPO, компания, специализирующаяся на сборе требований, анализе и проектировании ПО",
+                "footerText": "&copy; 2025 Все права защищены"
+            },
+            "ja": {
+                "sobreLink": "概要",
+                "politicasLink": "ポリシー",
+                "contaLink": "アカウント",
+                "nacionalButton": "国内",
+                "internacionalButton": "国際",
+                "marqueeText": "KHIPO、要件収集、分析、設計に特化したソフトウェア開発企業",
+                "footerText": "&copy; 2025 全著作権所有"
+            },
+            "zh": {
+                "sobreLink": "关于",
+                "politicasLink": "政策",
+                "contaLink": "账户",
+                "nacionalButton": "国内",
+                "internacionalButton": "国际",
+                "marqueeText": "KHIPO，专门从事需求收集、分析和设计的软件公司",
+                "footerText": "&copy; 2025 保留所有权利"
+            }
+        };
+
+        function changeLanguage() {
+            var selectedLanguage = document.getElementById("languageSelect").value;
+            var translation = translations[selectedLanguage];
+
+            document.getElementById("sobreLink").textContent = translation.sobreLink;
+            document.getElementById("politicasLink").textContent = translation.politicasLink;
+            document.getElementById("contaLink").textContent = translation.contaLink;
+            document.getElementById("nacionalButton").textContent = translation.nacionalButton;
+            document.getElementById("internacionalButton").textContent = translation.internacionalButton;
+            document.getElementById("marqueeText").textContent = translation.marqueeText;
+            document.getElementById("footerText").innerHTML = translation.footerText;
+        }
+
+        function toggleMenu() {
+            var menuContainer = document.getElementById("menuContainer");
+            var menuIcon = document.querySelector(".menu-icon");
+
+            if (menuContainer.style.right === "0px") {
+                menuContainer.style.right = "-250px";
+                menuIcon.classList.remove("open");
+            } else {
+                menuContainer.style.right = "0px";
+                menuIcon.classList.add("open");
+            }
+        }
+    </script>
+</body>
+</html>

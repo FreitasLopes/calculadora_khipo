@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - KHipo</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+            margin-top: 80px;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            border: none;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #4a2396;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+            animation-delay: 0.5s;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+            animation-delay: 1s;
+        }
+
+        button {
+            background-color: #6a4caf;
+            color: white;
+            padding: 12px 20px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            width: 100%;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+            animation-delay: 1.5s;
+            transition: transform 0.3s ease;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #552f81;
+            color: white;
+            padding: 10px 20px;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #siteTitle {
+            font-weight: bold;
+            color: white;
+            font-size: 24px;
+            text-decoration: none;
+        }
+
+        .language-selector {
+            background-color: #6c5c80;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .language-selector select {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        footer p {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="main.html" id="siteTitle">KHIPO</a>
+        <div class="language-selector">
+            <label for="language">Idioma: </label>
+            <select id="language" onchange="changeLanguage()">
+                <option value="pt">Português</option>
+                <option value="en">Inglês</option>
+            </select>
+        </div>
+    </header>
+
+    <div class="container">
+        <h2>Cadastro</h2>
+        <form action="#">
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div>
+                <label for="user">Usuário:</label>
+                <input type="text" id="user" name="user" required>
+            </div>
+            <div>
+                <label for="password">Senha:</label>
+                <input type="password" id="password" name="password" required>
+            </div>   
+            <button><a href="base de dados.html" style="text-decoration: none; color: white;">CADASTRO</a></button> 
+        </form>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Todos os direitos reservados</p>
+    </footer>
+
+    <script>
+        function changeLanguage() {
+            const language = document.getElementById('language').value;
+
+            if (language === 'en') {
+                document.getElementById('siteTitle').textContent = 'KHIPO';
+                document.querySelector("button a").textContent = 'REGISTER';
+                document.querySelector("label[for='email']").textContent = 'Email:';
+                document.querySelector("label[for='user']").textContent = 'Username:';
+                document.querySelector("label[for='password']").textContent = 'Password:';
+            } else {
+                document.getElementById('siteTitle').textContent = 'KHIPO';
+                document.querySelector("button a").textContent = 'CADASTRO';
+                document.querySelector("label[for='email']").textContent = 'Email:';
+                document.querySelector("label[for='user']").textContent = 'Usuário:';
+                document.querySelector("label[for='password']").textContent = 'Senha:';
+            }
+        }
+    </script>
+
+</body>
+</html>
